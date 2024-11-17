@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     response.cookies.set('session', token, { httpOnly: true, path: '/' }); // Set the cookie
 
     return response;
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to set session cookie' }, { status: 500 });
   }
 }

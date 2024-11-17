@@ -49,21 +49,21 @@ const Page: React.FC = () => {
     }
   };
 
-  const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-        },
-        () => {
-          alert('Unable to retrieve location. Please allow location access.');
-        }
-      );
-    } else {
-      alert('Geolocation is not supported by this browser.');
-    }
-  };
+  // const getCurrentLocation = () => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         setLatitude(position.coords.latitude);
+  //         setLongitude(position.coords.longitude);
+  //       },
+  //       () => {
+  //         alert('Unable to retrieve location. Please allow location access.');
+  //       }
+  //     );
+  //   } else {
+  //     alert('Geolocation is not supported by this browser.');
+  //   }
+  // };
 
   return (
     <div className="w-full h-[100%] flex items-center flex-col bg-gray-100 font-poppins">

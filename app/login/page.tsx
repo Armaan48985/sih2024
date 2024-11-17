@@ -34,7 +34,7 @@ const PhoneOtpLoginPage = () => {
           setOtpSent(true);
           setErrorMessage('');
         }
-      } catch (err) {
+      } catch {
         setErrorMessage('Something went wrong, please try again.');
       }
     } else {

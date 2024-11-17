@@ -51,8 +51,6 @@ export default function Home() {
     fetchAccessToken();
   }, []);
 
-  const router = useRouter();
-
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-gray-100 font-poppins relative">
       <div>

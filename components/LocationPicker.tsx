@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Map, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { FaTimes } from "react-icons/fa";
+import { MapLayerMouseEvent } from "mapbox-gl";
 
 interface LocationPickerProps {
   onSelectLocation: (location: { latitude: number; longitude: number } | null) => void;
@@ -39,12 +40,12 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     }
   }, []);
 
-  const handleMapClick = (event: any) => {
+  const handleMapClick = (event: MapLayerMouseEvent) => {
     const longitude = event.lngLat.lng;
     const latitude = event.lngLat.lat;
     setSelectedLocation({ latitude, longitude });
   };
-
+  
   const handleConfirmLocation = () => {
     onSelectLocation(selectedLocation);
     setIsMapVisible(false);

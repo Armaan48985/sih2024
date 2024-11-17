@@ -1,22 +1,17 @@
-'use client'
+'use client';
+
 import { useEffect, useState } from "react";
-import { FaMapMarkerAlt, FaPlus, FaTimes, FaTools, FaUser, FaUsers, FaUserShield } from "react-icons/fa"; 
-import { supabase } from "./supabase";
-import { SonnerDemo } from "@/components/SonnerDemo";
-import LocationPicker from "@/components/LocationPicker";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function Home() {
-
-
-  const [token, setToken] = useState(null);
-  const [error, setError] = useState(null);
+  // Define the token state as a string or null
+  const [token, setToken] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null); // Error can be a string or null
 
   useEffect(() => {
-    async function fetchAccessToken() {
+    async function fetchAccessToken(): Promise<void> {
       try {
         const response = await fetch("https://bhoonidhi-api.nrsc.gov.in/auth/token", {
           method: "POST",
@@ -36,37 +31,46 @@ export default function Home() {
         }
 
         const data = await response.json();
-        setToken(data.access_token);  // Assuming access_token is in the response body
-
-      } catch (error) {
-        setError(error?.message);
-        console.error("Failed to fetch access token:", error);
+        // Ensure data has the property `access_token`
+        if (data.access_token) {
+          setToken(data.access_token);
+        } else {
+          throw new Error("Access token not found in response");
+        }
+      } catch (err) {
+        // Check if the error is an instance of Error
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+        console.error("Failed to fetch access token:", err);
       }
     }
 
     fetchAccessToken();
   }, []);
 
-const router = useRouter()
+  const router = useRouter();
+
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-gray-100 font-poppins relative">
-      
       <div>
         <h1>Home Page</h1>
-        {error ? <p>Error: {error}</p> : <p>Access Token: {token ? token : "Loading..."}</p>}
+        {error ? (
+          <p>Error: {error}</p>
+        ) : (
+          <p>Access Token: {token ? token : "Loading..."}</p>
+        )}
       </div>
-      
-      
-      <Link href='/construction-form'>
+
+      <Link href="/construction-form">
         <div className="w-20 h-20 absolute right-28 bottom-16 flex items-center justify-center rounded-full bg-orange-400 animate-zoom cursor-pointer">
           <span className="text-3xl text-white">
             <FaPlus />
           </span>
         </div>
       </Link>
-       
-
-    
     </div>
   );
 }

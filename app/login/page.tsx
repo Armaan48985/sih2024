@@ -70,7 +70,7 @@ const PhoneOtpLoginPage = () => {
           router.push('/');
           setOtpSent(false);
         }
-      } catch (err) {
+      } catch {
         setErrorMessage('Failed to verify OTP, please try again.');
       }
     }
@@ -136,7 +136,7 @@ const PhoneOtpLoginPage = () => {
       </form>
 
       <div className="mt-4 text-center text-sm text-gray-600">
-        <span>Don't have an account?</span>
+        <span>Dont have an account?</span>
         <button className="text-blue-600 hover:underline ml-1">
           Sign Up
         </button>

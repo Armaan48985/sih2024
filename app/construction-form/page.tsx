@@ -9,8 +9,8 @@ import { useRouter } from 'next/navigation';
 const Page: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [otherRole, setOtherRole] = useState<string>('');
-  const [latitude, setLatitude] = useState<number | undefined>();
-  const [longitude, setLongitude] = useState<number | undefined>();
+  const [latitude] = useState<number | undefined>();
+  const [longitude] = useState<number | undefined>();
   const router = useRouter();
 
 

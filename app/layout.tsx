@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-
+import { Toaster } from "@/components/ui/sonner";
+import { Montserrat } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -12,6 +14,19 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+
+
+const mont = Montserrat({
+  variable: "--font-mont",
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  subsets: ['latin-ext'],
+})
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  subsets: ['latin-ext'],
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,9 +41,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${mont.variable} ${poppins.variable} antialiased`}
       >
         {children}
+        <Toaster/>
       </body>
     </html>
   );

@@ -3,41 +3,108 @@
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import Link from "next/link";
+import axios from "axios";
+
+interface SearchPayload {
+  collections: string[];
+  ids?: string[];
+  bbox?: [number, number, number, number];
+  intersects?: {
+    type: "Point" | "Polygon" | "LineString";
+    coordinates: [number, number] | [number, number][] | [number, number][][];
+    bbox?: [number, number, number, number];
+  };
+  datetime?: string;
+  limit?: number;
+  sortby?: {
+    field: string;
+    direction: "asc" | "desc";
+  }[];
+  fields?: {
+    include?: string[];
+    exclude?: string[];
+  };
+  token?: string;
+  filter?: Record<string, unknown>;
+  "filter-crs"?: string;
+  "filter-lang"?: string;
+}
+
 
 export default function Home() {
   // Define the token state as a string or null
   const [token, setToken] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null); // Error can be a string or null
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // const searchSatelliteData = async () => {
+    //   const url = "https://bhoonidhi-api.nrsc.gov.in/data/search";
+    //   const accessToken = "03e7e782-a804-11ef-864c-0afff4b03477"; // Replace with your token.
+    
+    //   const payload: SearchPayload = {
+    //     collections: ["Landsat-8", "Sentinel-2"],
+    //     bbox: [76.0, 10.0, 77.0, 11.0],
+    //     datetime: "2024-01-01T00:00:00Z/2024-11-20T23:59:59Z",
+    //     limit: 10,
+    //     sortby: [
+    //       {
+    //         field: "datetime",
+    //         direction: "desc",
+    //       },
+    //     ],
+    //     fields: {
+    //       include: ["id", "geometry", "properties.datetime"],
+    //       exclude: ["assets"],
+    //     },
+    //   };
+    
+    //   try {
+    //     const response = await axios.post(url, payload, {
+    //       headers: {
+    //         Authorization: `Bearer ${accessToken}`,
+    //         "Content-Type": "application/json",
+    //       },
+    //     });
+    
+    //     console.log("Response Data:", response.data);
+    //   } catch (error) {
+    //     if (axios.isAxiosError(error)) {
+    //       console.error("Error Response:", error.response?.data || error.message);
+    //     } else {
+    //       console.error("Unexpected Error:", error);
+    //     }
+    //   }
+    // };
+    
+    // searchSatelliteData();
+
     async function fetchAccessToken(): Promise<void> {
       try {
         const response = await fetch("https://bhoonidhi-api.nrsc.gov.in/auth/token", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify({
-            userId: "luffy__23",        // replace with your userId
-            password: "Armaan@23",  // replace with your password
+            userId: "ONL_armaan__23",  
+            password: "Armaan@23",      
             grant_type: "password",
           }),
         });
 
+        // Handle non-OK response status
         if (!response.ok) {
           const errorText = await response.text();
           throw new Error(`Error ${response.status}: ${response.statusText} - ${errorText}`);
         }
 
         const data = await response.json();
-        // Ensure data has the property `access_token`
-        if (data.access_token) {
+
+        // Check if access token exists in the response
+        if (data && data.access_token) {
           setToken(data.access_token);
         } else {
           throw new Error("Access token not found in response");
         }
       } catch (err) {
-        // Check if the error is an instance of Error
+        // Proper error handling
         if (err instanceof Error) {
           setError(err.message);
         } else {
@@ -47,8 +114,9 @@ export default function Home() {
       }
     }
 
-    fetchAccessToken();
-  }, []);
+    fetchAccessToken()
+  
+  }, []); // Emp
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-gray-100 font-poppins relative">

@@ -3,32 +3,7 @@
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import Link from "next/link";
-import axios from "axios";
 
-interface SearchPayload {
-  collections: string[];
-  ids?: string[];
-  bbox?: [number, number, number, number];
-  intersects?: {
-    type: "Point" | "Polygon" | "LineString";
-    coordinates: [number, number] | [number, number][] | [number, number][][];
-    bbox?: [number, number, number, number];
-  };
-  datetime?: string;
-  limit?: number;
-  sortby?: {
-    field: string;
-    direction: "asc" | "desc";
-  }[];
-  fields?: {
-    include?: string[];
-    exclude?: string[];
-  };
-  token?: string;
-  filter?: Record<string, unknown>;
-  "filter-crs"?: string;
-  "filter-lang"?: string;
-}
 
 
 export default function Home() {

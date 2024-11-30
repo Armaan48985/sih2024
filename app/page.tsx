@@ -38,7 +38,7 @@ export default function Home() {
         console.log("API Response:", data);
         setToken(data.access_token);
       } catch (error) {
-        console.error("Failed to fetch access token:", error.message);
+        console.error("Failed to fetch access token:");
       }
     };
     
